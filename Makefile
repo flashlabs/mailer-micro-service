@@ -8,10 +8,14 @@ lint:
 check:
 	staticcheck ./...
 
-# executes a test suite.
+# test: executes a test suite.
 test:
 	go test ./...
 
-# builds application.
+# build: builds application.
 build:
 	env GOOS=linux GOARCH=amd64 go build -o mailer-micro-service main.go
+
+# run: starts an app.
+run:
+	go run main.go
