@@ -37,6 +37,8 @@ func initApp(c context.Context) error {
 		return fmt.Errorf("error while executing initializer.Database: %w", err)
 	}
 
+	initializer.Mailer()
+
 	r, err := initializer.Router()
 	if err != nil {
 		return fmt.Errorf("error while executing initializer.Router: %w", err)
