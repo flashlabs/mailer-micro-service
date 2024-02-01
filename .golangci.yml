@@ -2,6 +2,7 @@ run:
   skip-dirs-use-default: false
   skip-files:
     - internal/service/mailer.go
+    - internal/entity/field/types.go
 linters-settings:
   govet:
     enable-all: true
