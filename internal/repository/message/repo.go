@@ -21,16 +21,18 @@ func ByID(ctx context.Context, id string) (entity.Message, error) {
 
 	var m entity.Message
 
-	err := registry.DBPool.QueryRow(ctx, query, id).Scan(&m.ID, &m.Email, &m.Title, &m.Content, &m.MailingID, &m.InsertTime)
+	if err := registry.DBPool.QueryRow(ctx, query, id).Scan(&m.ID, &m.Email, &m.Title, &m.Content, &m.MailingID, &m.InsertTime); err != nil {
+		return entity.Message{}, fmt.Errorf("error while executing SELECT registry.DBPool.Exec: %w", err)
+	}
 
-	return entity.Message{}, err
+	return entity.Message{}, nil
 }
 
 func DeleteByID(ctx context.Context, id string) error {
 	query := fmt.Sprintf(`DELETE FROM %s m WHERE m.id = $1`, table)
 
 	if _, err := registry.DBPool.Exec(ctx, query, id); err != nil {
-		return fmt.Errorf("error while executing registry.DBPool.Exec: %w", err)
+		return fmt.Errorf("error while executing DELETE registry.DBPool.Exec: %w", err)
 	}
 
 	return nil

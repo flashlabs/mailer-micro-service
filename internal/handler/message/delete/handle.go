@@ -29,7 +29,7 @@ func Handle(w http.ResponseWriter, r *http.Request) {
 		}
 
 		w.WriteHeader(http.StatusNoContent)
-	case errors.Is(err, pgx.ErrNoRows):
+	case errors.Is(errors.Unwrap(err), pgx.ErrNoRows):
 		http.NotFound(w, r)
 	default:
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
