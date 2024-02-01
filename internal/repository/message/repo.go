@@ -16,16 +16,6 @@ const (
 	table = "message"
 )
 
-func DeleteOutdated(ctx context.Context) error {
-	query := fmt.Sprintf(`DELETE FROM %s m WHERE m.insert_time < NOW() - INTERVAL '5 MINUTE'`, table)
-
-	if _, err := registry.DBPool.Exec(ctx, query); err != nil {
-		return fmt.Errorf("error while executing registry.DBPool.Exec: %w", err)
-	}
-
-	return nil
-}
-
 func ByID(ctx context.Context, id string) (entity.Message, error) {
 	query := fmt.Sprintf(`SELECT m.id, m.email, m.title, m.content, m.mailing_id, m.insert_time FROM %s m WHERE m.id = $1`, table)
 
@@ -52,6 +42,16 @@ func DeleteByMailingID(ctx context.Context, id uint) error {
 	query := fmt.Sprintf(`DELETE FROM %s m WHERE m.mailing_id = $1`, table)
 
 	if _, err := registry.DBPool.Exec(ctx, query, id); err != nil {
+		return fmt.Errorf("error while executing registry.DBPool.Exec: %w", err)
+	}
+
+	return nil
+}
+
+func DeleteOutdated(ctx context.Context) error {
+	query := fmt.Sprintf(`DELETE FROM %s m WHERE m.insert_time < NOW() - INTERVAL '5 MINUTE'`, table)
+
+	if _, err := registry.DBPool.Exec(ctx, query); err != nil {
 		return fmt.Errorf("error while executing registry.DBPool.Exec: %w", err)
 	}
 
