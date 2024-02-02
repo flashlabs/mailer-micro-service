@@ -19,6 +19,7 @@ func Database(ctx context.Context) error {
 		os.Getenv("POSTGRES_PASSWORD"),
 		os.Getenv("POSTGRES_DB"),
 	)
+
 	pool, err := pgxpool.New(ctx, conn)
 	if err != nil {
 		return fmt.Errorf("unable to create connection pool: %w", err)
