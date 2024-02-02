@@ -1,4 +1,4 @@
-create table message
+create table if not exists message
 (
     id          uuid                     not null
         constraint message_pk
@@ -13,8 +13,8 @@ create table message
 alter table message
     owner to postgres;
 
-create index message_mailing_id_index
+create index if not exists message_mailing_id_index
     on message (mailing_id);
 
-create unique index message_email_mailing_id_uindex
+create unique index if not exists message_email_mailing_id_uindex
     on message (email, mailing_id);

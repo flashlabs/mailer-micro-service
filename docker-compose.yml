@@ -1,10 +1,31 @@
 version: '3.7'
 
+volumes:
+  postgres_data:
+
 services:
-  db:
+  app:
+    depends_on:
+      - postgres
+    build: .
+    command: /usr/local/bin/mailer-micro-service
+    ports: [ "8080:8080" ]
+    volumes:
+      - ./:/appdev
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_USER: postgres
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PORT: 5432
+
+  postgres:
     image: postgres:latest
     restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: example # Use postgres/example user/password credentials
+

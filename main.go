@@ -6,8 +6,6 @@ import (
 	"log"
 	"os"
 
-	_ "github.com/joho/godotenv/autoload"
-
 	"github.com/flashlabs/mailer-micro-service/internal/initializer"
 	"github.com/flashlabs/mailer-micro-service/internal/initializer/server"
 )

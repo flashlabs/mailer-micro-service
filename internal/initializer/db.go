@@ -10,12 +10,16 @@ import (
 	"github.com/flashlabs/mailer-micro-service/internal/registry"
 )
 
-const (
-	databaseEnvKey = "DATABASE_URL"
-)
-
 func Database(ctx context.Context) error {
-	pool, err := pgxpool.New(ctx, os.Getenv(databaseEnvKey))
+	conn := fmt.Sprintf(
+		"host=%s port=%s user=%s password=%s dbname=%s",
+		os.Getenv("POSTGRES_HOST"),
+		os.Getenv("POSTGRES_PORT"),
+		os.Getenv("POSTGRES_USER"),
+		os.Getenv("POSTGRES_PASSWORD"),
+		os.Getenv("POSTGRES_DB"),
+	)
+	pool, err := pgxpool.New(ctx, conn)
 	if err != nil {
 		return fmt.Errorf("unable to create connection pool: %w", err)
 	}
