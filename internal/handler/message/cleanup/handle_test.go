@@ -31,9 +31,7 @@ func TestHandle(t *testing.T) {
 	err = initializer.Handler(r)
 	require.NoError(t, err)
 
-	c := context.Background()
-
-	req, err := http.NewRequestWithContext(c, http.MethodPost, "/api/messages/cleanup", nil)
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodPost, "/api/messages/cleanup", nil)
 	require.NoError(t, err)
 
 	rr := httptest.NewRecorder()
