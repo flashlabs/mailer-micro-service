@@ -19,9 +19,9 @@ func Handle(w http.ResponseWriter, r *http.Request) {
 
 	if err := message.Create(r.Context(), m); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(http.StatusCreated)
 	}
-
-	w.WriteHeader(http.StatusCreated)
 
 	log.Println("HTTP create resource handler ended")
 }

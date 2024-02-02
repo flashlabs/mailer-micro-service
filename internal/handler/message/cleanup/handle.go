@@ -12,9 +12,9 @@ func Handle(w http.ResponseWriter, r *http.Request) {
 
 	if err := message.DeleteOutdated(r.Context()); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(http.StatusAccepted)
 	}
-
-	w.WriteHeader(http.StatusAccepted)
 
 	log.Println("HTTP cleanup message handler ended")
 }
