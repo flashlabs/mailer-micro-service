@@ -14,7 +14,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"jan.kowalski-12345@example.com\",\n    \"title\": \"Interview\",\n    \"content\": \"simple text\",\n    \"mailing_id\": 2,\n    \"insert_time\": \"2020-04-24T05:42:38.725412916Z\"\n}",
+							"raw": "{\n    \"email\": \"jan.kowalski-12345@example.com\",\n    \"title\": \"Interview\",\n    \"content\": \"simple text\",\n    \"mailing_id\": 1,\n    \"insert_time\": \"2020-04-24T05:42:38.725412916Z\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -41,7 +41,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"mailing_id\": 2\n}",
+							"raw": "{\n    \"mailing_id\": 12\n}",
 							"options": {
 								"raw": {
 									"language": "json"
