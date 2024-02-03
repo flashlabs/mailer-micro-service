@@ -19,3 +19,10 @@ build:
 # run: starts an app.
 run:
 	go run main.go
+
+ks:
+	kubectl apply -f app-service.yaml,postgres-service.yaml,app-deployment.yaml,postgres-deployment.yaml,postgres-data-persistentvolumeclaim.yaml
+
+kd:
+	kubectl delete -f app-service.yaml,postgres-service.yaml,app-deployment.yaml,postgres-deployment.yaml,postgres-data-persistentvolumeclaim.yaml
+
