@@ -10,8 +10,6 @@ services:
     build: .
     command: /usr/local/bin/mailer-micro-service
     ports: [ "8080:8080" ]
-    volumes:
-      - ./:/appdev
     environment:
       POSTGRES_PASSWORD: example
       POSTGRES_USER: postgres
