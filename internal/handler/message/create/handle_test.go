@@ -104,3 +104,78 @@ func TestCreateHandleCompletesSuccessfully(t *testing.T) {
 		t.Errorf("there were unfulfilled expectations: %s", err)
 	}
 }
+
+func TestCreateHandlePayloads(t *testing.T) {
+	type args struct {
+		message string
+		payload []byte
+		status  int
+	}
+
+	tests := []struct {
+		name string
+		args args
+	}{
+		{
+			name: "missing email field",
+			args: args{
+				payload: []byte(`{
+					"invalid_email_field": "jan.kowalski-12345@example.com",
+					"title": "Interview",
+					"content": "simple text",
+					"mailing_id": 1,
+					"insert_time": "2020-04-24T05:42:38.725412916Z"
+				}`),
+				status:  http.StatusUnprocessableEntity,
+				message: "email error: missing param\n",
+			},
+		},
+		{
+			name: "invalid mailing_id type",
+			args: args{
+				payload: []byte(`{
+					"email": "jan.kowalski-12345@example.com",
+					"title": "Interview",
+					"content": "simple text",
+					"mailing_id": "1",
+					"insert_time": "2020-04-24T05:42:38.725412916Z"
+				}`),
+				status:  http.StatusUnprocessableEntity,
+				message: "mailing_id error: invalid data type\n",
+			},
+		},
+		{
+			name: "malformed payload",
+			args: args{
+				payload: []byte(`{
+					"email": "jan.kowalski-12345@example.com",
+					"title": "Interview",
+					"content": "simple text",
+					"mailing_id": "1""",
+					"insert_time": "2020-04-24T05:42:38.725412916Z"
+				}`),
+				status:  http.StatusBadRequest,
+				message: "error while executing handler.Payload: invalid payload\n",
+			},
+		},
+	}
+
+	r, err := initializer.Router()
+	require.NoError(t, err)
+
+	err = initializer.Handler(r)
+	require.NoError(t, err)
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, err := http.NewRequestWithContext(context.Background(), http.MethodPost, "/api/messages", bytes.NewBuffer(tt.args.payload))
+			require.NoError(t, err)
+
+			rr := httptest.NewRecorder()
+			r.ServeHTTP(rr, req)
+
+			assert.Equal(t, tt.args.status, rr.Code)
+			assert.Equal(t, tt.args.message, rr.Body.String())
+		})
+	}
+}

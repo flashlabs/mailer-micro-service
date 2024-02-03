@@ -28,17 +28,23 @@ func Handle(w http.ResponseWriter, r *http.Request) {
 	messages, err := message.FindByMailingID(c, p.MailingID)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+
+		return
 	}
 
 	if err = registry.Mailer.SendBatch(messages); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+
+		return
 	}
 
 	if err = message.DeleteByMailingID(c, p.MailingID); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-	} else {
-		w.WriteHeader(http.StatusAccepted)
+
+		return
 	}
+
+	w.WriteHeader(http.StatusAccepted)
 
 	log.Println("HTTP send message handler ended")
 }

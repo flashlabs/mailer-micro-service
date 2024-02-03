@@ -7,10 +7,10 @@ import (
 )
 
 type Message struct {
-	InsertTime time.Time    `json:"insert_time"`
-	ID         *pgtype.UUID `json:"-"`
-	Email      string       `json:"email"`
-	Title      string       `json:"title"`
-	Content    string       `json:"content"`
-	MailingID  int          `json:"mailing_id"`
+	InsertTime time.Time
+	ID         *pgtype.UUID
+	Email      string
+	Title      string
+	Content    string
+	MailingID  int
 }
