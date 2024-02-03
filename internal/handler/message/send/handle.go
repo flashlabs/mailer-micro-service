@@ -1,31 +1,38 @@
 package send
 
 import (
-	"encoding/json"
+	"errors"
 	"log"
 	"net/http"
 
 	"github.com/flashlabs/mailer-micro-service/internal/registry"
 	"github.com/flashlabs/mailer-micro-service/internal/repository/message"
+	"github.com/flashlabs/mailer-micro-service/pkg"
 )
 
-type payload struct {
-	MailingID uint `json:"mailing_id"`
+type data struct {
+	MailingID int
 }
 
 func Handle(w http.ResponseWriter, r *http.Request) {
 	log.Println("HTTP send message handler started")
 
-	c := r.Context()
+	rd, err := requestData(r)
+	if err != nil {
+		if errors.Is(errors.Unwrap(err), pkg.ErrInvalidPayload) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, err.Error(), http.StatusUnprocessableEntity)
+		}
 
-	var p payload
-	if err := json.NewDecoder(r.Body).Decode(&p); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
-	log.Printf("sending mailing #%d requested", p.MailingID)
+	log.Printf("sending mailing #%d requested", rd.MailingID)
 
-	messages, err := message.FindByMailingID(c, p.MailingID)
+	c := r.Context()
+
+	messages, err := message.FindByMailingID(c, rd.MailingID)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 
@@ -38,7 +45,7 @@ func Handle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err = message.DeleteByMailingID(c, p.MailingID); err != nil {
+	if err = message.DeleteByMailingID(c, rd.MailingID); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 
 		return

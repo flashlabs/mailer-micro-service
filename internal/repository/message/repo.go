@@ -38,7 +38,7 @@ func DeleteByID(ctx context.Context, id string) error {
 	return nil
 }
 
-func DeleteByMailingID(ctx context.Context, id uint) error {
+func DeleteByMailingID(ctx context.Context, id int) error {
 	query := fmt.Sprintf(`DELETE FROM %s m WHERE m.mailing_id = $1`, table)
 
 	if _, err := registry.DBPool.Exec(ctx, query, id); err != nil {
@@ -58,7 +58,7 @@ func DeleteOutdated(ctx context.Context) error {
 	return nil
 }
 
-func FindByMailingID(ctx context.Context, id uint) ([]entity.Message, error) {
+func FindByMailingID(ctx context.Context, id int) ([]entity.Message, error) {
 	var result []entity.Message
 
 	query := fmt.Sprintf(`SELECT m.id, m.email, m.title, m.content, m.mailing_id, m.insert_time FROM %s m WHERE m.mailing_id = $1`, table)
