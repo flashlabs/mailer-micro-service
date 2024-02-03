@@ -30,12 +30,14 @@ func main() {
 	log.Println(appDoneMessage)
 }
 
-func initApp(c context.Context) error {
-	if err := initializer.Database(c); err != nil {
+func initApp(ctx context.Context) error {
+	if err := initializer.Database(ctx); err != nil {
 		return fmt.Errorf("error while executing initializer.Database: %w", err)
 	}
 
 	initializer.Mailer()
+
+	initializer.Cleanup(ctx)
 
 	r, err := initializer.Router()
 	if err != nil {
