@@ -24,17 +24,23 @@ spec:
         - env:
             - name: POSTGRES_PASSWORD
               value: example
-          image: postgres:latest
+          image: postgres:16.1
           name: postgres
           ports:
             - containerPort: 5432
               hostPort: 5432
               protocol: TCP
-#          volumeMounts:
-#            - mountPath: /var/lib/postgresql/data
-#              name: postgres-data
+          volumeMounts:
+            - name: init-db
+              mountPath: /docker-entrypoint-initdb.d
+            - name: postgres-data
+              mountPath: /var/lib/postgresql/data
+
       restartPolicy: Always
-#      volumes:
-#        - name: postgres-data
-#          persistentVolumeClaim:
-#            claimName: postgres-data
+      volumes:
+        - name: init-db
+          configMap:
+            name: postgres-initdb-config
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-data
