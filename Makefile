@@ -22,11 +22,11 @@ run:
 
 # ks: starts an app in the kubernetes cluster
 ks:
-	cd kubernetes && kubectl apply -f app-service.yaml,postgres-service.yaml,app-deployment.yaml,postgres-deployment.yaml,postgres-data-persistentvolumeclaim.yaml,postgres-configmap.yaml
+	kubectl apply -f kubernetes/.
 
 # kd: stops the app
 kd:
-	cd kubernetes && kubectl delete -f app-service.yaml,postgres-service.yaml,app-deployment.yaml,postgres-deployment.yaml,postgres-data-persistentvolumeclaim.yaml,postgres-configmap.yaml
+	kubectl delete -f kubernetes/.
 
 # mkenv: allow to work in a minikube docker env
 mkenv:
@@ -40,11 +40,11 @@ mks:
 mkd:
 	minikube stop
 
-# kbpa: starts a kubernetes proxy for app
-kbpa:
+# kpa: starts a kubernetes proxy for app
+kpa:
 	kubectl port-forward service/app 8080:8080
 
-# kbpa: starts a kubernetes proxy for postgres
-kbpp:
+# kpp: starts a kubernetes proxy for postgres
+kpp:
 	kubectl port-forward service/postgres 5432:5432
 

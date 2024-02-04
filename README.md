@@ -19,25 +19,25 @@ docker build -t mailer-micro-service-app:latest .
 Start the Kubernetes cluster:
 
 ```shell
-make mks
+minikube start
 ```
 
 Start the application:
 
 ```shell
-make ks
+kubectl apply -f kubernetes/.
 ```
 
 Start the proxy on `127.0.0.1:8080`(*)
 
 ```shell
-make kbpa
+kubectl port-forward service/app 8080:8080
 ```
 
 To connect manually to the database, open connection on `localhost:5432` (*)
 
 ```shell
-make kbpp
+kubectl port-forward service/postgres 5432:5432
 ```
 
 *) Please be sure that the node is in `Running` state. You can check it with the `kubectl get pods` command.
@@ -71,11 +71,15 @@ curl -X DELETE localhost:8080/api/messages/{id}
 Stop the application:
 
 ```shell
-make kd
+kubectl delete -f kubernetes/.
 ```
 
 Stop the cluster:
 
 ```shell
-make mkd
+minikube stop
 ```
+
+## Makefile
+
+To simplify the commands management, there's a `Makefile` file that contains all the commands aliased to a shorter form.
