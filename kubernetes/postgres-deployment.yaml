@@ -13,11 +13,8 @@ spec:
     type: Recreate
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert --build=local
-        kompose.version: 1.32.0 (HEAD)
       labels:
-        io.kompose.network/mailer-micro-service-default: "true"
+        network/mailer-micro-service-default: "true"
         service: postgres
     spec:
       containers:
