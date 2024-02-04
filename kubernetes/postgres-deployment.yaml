@@ -1,9 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert --build=local
-    kompose.version: 1.32.0 (HEAD)
   labels:
     io.kompose.service: postgres
   name: postgres

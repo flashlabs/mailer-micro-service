@@ -21,8 +21,8 @@ run:
 	go run main.go
 
 ks:
-	kubectl apply -f app-service.yaml,postgres-service.yaml,app-deployment.yaml,postgres-deployment.yaml,postgres-data-persistentvolumeclaim.yaml
+	cd kubernetes && kubectl apply -f app-service.yaml,postgres-service.yaml,app-deployment.yaml,postgres-deployment.yaml
 
 kd:
-	kubectl delete -f app-service.yaml,postgres-service.yaml,app-deployment.yaml,postgres-deployment.yaml,postgres-data-persistentvolumeclaim.yaml
+	cd kubernetes && kubectl delete -f app-service.yaml,postgres-service.yaml,app-deployment.yaml,postgres-deployment.yaml
 
