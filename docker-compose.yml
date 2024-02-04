@@ -1,7 +1,7 @@
 version: '3.7'
 
-volumes:
-  postgres_data:
+#volumes:
+#  postgres_data:
 
 services:
   app:
@@ -20,12 +20,12 @@ services:
       POSTGRES_PORT: 5432
 
   postgres:
-    image: postgres:latest
+    image: postgres:16.1
     restart: always
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+#      - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: example # Use postgres/example user/password credentials
-

@@ -1,6 +1,6 @@
 FROM golang:1.21
 WORKDIR /mnt/app
-COPY . .
+COPY ../.. .
 RUN go build
 
 FROM docker
