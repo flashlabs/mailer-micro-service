@@ -15,6 +15,12 @@ spec:
         network/mailer-micro-service-default: "true"
         service: app
     spec:
+      initContainers:
+        - name: check-db-ready
+          image: postgres:16.1
+          command: ['sh', '-c',
+            'until pg_isready -h postgres -p 5432; 
+          do echo waiting for database; sleep 2; done;']
       containers:
         - args:
             - /usr/local/bin/mailer-micro-service
