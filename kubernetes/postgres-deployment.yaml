@@ -2,13 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    io.kompose.service: postgres
+    service: postgres
   name: postgres
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: postgres
+      service: postgres
   strategy:
     type: Recreate
   template:
@@ -18,7 +18,7 @@ spec:
         kompose.version: 1.32.0 (HEAD)
       labels:
         io.kompose.network/mailer-micro-service-default: "true"
-        io.kompose.service: postgres
+        service: postgres
     spec:
       containers:
         - env:
