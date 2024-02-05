@@ -3,4 +3,6 @@ WORKDIR /mnt/app
 COPY ../.. .
 RUN go build
 
-COPY mailer-micro-service /usr/local/bin/mailer-micro-service
+FROM docker
+COPY --from=0 /mnt/app/mailer-micro-service /usr/local/bin/mailer-micro-service
+RUN apk add bash curl libc6-compat
