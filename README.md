@@ -10,6 +10,12 @@ Micro service that stores customers and send them emails based on `mailing ID`.
 
 ## Run the project
 
+Use `minikube` docker environment:
+
+```shell
+eval $(minikube docker-env)
+```
+
 Build the app image:
 
 ```shell
@@ -43,6 +49,12 @@ kubectl port-forward service/postgres 5432:5432
 *) Please be sure that the node is in `Running` state. You can check it with the `kubectl get pods` command.
 
 ## Test the project 
+
+To see what's going on, tail logs from the `app` container (`kubectl get pods` to get `app-node-id`) :
+
+```shell
+kubectl logs -f {app-node-id}
+```
 
 Create mailing records:
 
