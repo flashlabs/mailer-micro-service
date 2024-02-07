@@ -22,7 +22,7 @@ func main() {
 	c := context.Background()
 
 	if err := initApp(c); err != nil {
-		log.Printf("error while executing initApp: %q", err)
+		log.Printf("Error while executing initApp: %q", err)
 
 		os.Exit(appInitializationFailedCode)
 	}

@@ -18,7 +18,7 @@ func Handle(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	id := vars["id"]
-	log.Printf("delete message %q requested", id)
+	log.Printf("Delete message %q requested", id)
 
 	_, err := message.ByID(c, id)
 

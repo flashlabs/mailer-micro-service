@@ -28,7 +28,7 @@ func Handle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Printf("sending mailing #%d requested", rd.MailingID)
+	log.Printf("Sending mailing #%d requested", rd.MailingID)
 
 	c := r.Context()
 
