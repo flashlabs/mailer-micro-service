@@ -34,18 +34,19 @@ func Cleanup(ctx context.Context) {
 }
 
 func deleteOutdated(ctx context.Context) error {
+	t := time.NewTicker(interval)
+	defer t.Stop()
+
 	for {
 		select {
 		case <-ctx.Done():
 			return fmt.Errorf("context is done: %w", ctx.Err())
-		default:
+		case <-t.C:
 			log.Println("delete outdated cycle")
 
 			if err := message.DeleteOutdated(ctx); err != nil {
 				return fmt.Errorf("error while executing message.DeleteOutdated: %w", err)
 			}
-
-			time.Sleep(interval)
 		}
 	}
 }
