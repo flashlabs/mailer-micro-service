@@ -10,6 +10,12 @@ Micro service that stores customers and send them emails based on `mailing ID`.
 
 ## Run the project
 
+Start the Kubernetes cluster:
+
+```shell
+minikube start
+```
+
 Use `minikube` docker environment:
 
 ```shell
@@ -20,12 +26,6 @@ Build the app image:
 
 ```shell
 docker build -t mailer-micro-service-app:latest .
-```
-
-Start the Kubernetes cluster:
-
-```shell
-minikube start
 ```
 
 Start the application:
