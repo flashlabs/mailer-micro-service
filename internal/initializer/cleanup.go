@@ -28,7 +28,7 @@ func Cleanup(ctx context.Context) {
 
 	go func() {
 		if err := g.Wait(); err != nil {
-			log.Println("error while executing g.Wait: ", err)
+			log.Println("Error while executing g.Wait: ", err)
 		}
 	}()
 }
@@ -42,7 +42,7 @@ func deleteOutdated(ctx context.Context) error {
 		case <-ctx.Done():
 			return fmt.Errorf("context is done: %w", ctx.Err())
 		case <-t.C:
-			log.Println("delete outdated cycle")
+			log.Println("Delete outdated cycle")
 
 			if err := message.DeleteOutdated(ctx); err != nil {
 				return fmt.Errorf("error while executing message.DeleteOutdated: %w", err)

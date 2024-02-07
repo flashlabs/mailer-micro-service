@@ -48,7 +48,7 @@ func (m *Mailer) Send(message entity.Message) error {
 
 func (m *Mailer) sendMessage(message entity.Message) error {
 	// here goes send email implementation
-	log.Printf("sending mailing #%d to the %q customer", message.MailingID, message.Email)
+	log.Printf("Sending mailing #%d to the %q customer", message.MailingID, message.Email)
 
 	return nil
 }
